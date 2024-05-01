@@ -1,0 +1,74 @@
+/* Reset some basic elements */
+body, h1, p, table {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Set basic styles for the entire body */
+body {
+    font-family: 'Arial', sans-serif; /* Use a common sans-serif font */
+    line-height: 1.6;
+    margin: 20px;
+    background-color: #f4f4f4; /* A light grey background */
+    color: #333; /* Dark grey text color for readability */
+}
+
+/* Header styles */
+h1 {
+    font-size: 24px;
+    color: #444;
+    margin-bottom: 20px;
+}
+
+/* Styling for table elements */
+table {
+    width: 100%; /* Make table use up all available horizontal space */
+    border-collapse: collapse; /* Borders between rows and columns are merged */
+    margin-top: 20px;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+    border: 1px solid #ddd; /* Light grey border for each cell */
+}
+
+th {
+    background-color: #f9f9f9; /* Slightly darker background for header cells */
+}
+
+tr:nth-child(even) {
+    background-color: #f1f1f1; /* Zebra striping for rows */
+}
+
+/* Button and link styles */
+button, a {
+    font-size: 16px;
+    color: white;
+    background-color: #0056b3; /* A nice shade of blue */
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+button:hover, a:hover {
+    background-color: #004494; /* A slightly darker blue on hover */
+}
+
+/* Add some padding around the main application area */
+.main-container {
+    padding: 20px;
+}
+
+/*
+Resets: It's good practice to reset some default margin and padding to avoid inconsistencies across different browsers.
+Body Styling: Sets up a general font, line height, background color, and text color that will be common throughout the application.
+Headers: Styles for h1 elements to distinguish them as primary headers.
+Tables: Basic styling for tables with borders, padding, and alternating row colors for better readability.
+Buttons and Links: A consistent style for buttons and links to make them more attractive and usable.
+Utility Classes: For example, .main-container to add padding around main content areas, which you can apply to your top-level div in App.js.
+ */
