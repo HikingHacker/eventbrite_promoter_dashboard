@@ -92,3 +92,7 @@ yarn-error.log*
 ._*
 .Spotlight-V100
 .Trashes
+
+# Random #
+##########
+/z-local-temp/

@@ -15,31 +15,68 @@ body {
 }
 
 /* Header styles */
+h1.promoter-leader {
+    font-size: 2.5em;
+    color: gold; /* Gold color */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Text shadow for 3D effect */
+    text-transform: uppercase; /* Make the text uppercase */
+    letter-spacing: 2px; /* Increase spacing between letters */
+    text-align: center;
+    margin-bottom: 20px;
+    border-bottom: 5px solid black; /* Add a gold line under the header */
+}
+
+h1.promoter-leader.events {
+    color: black; /* Overwrite the color property */
+}
+
 h1 {
-    font-size: 24px;
+    font-size: 2em;
     color: #444;
     margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+h2 {
+    text-align: center;
 }
 
 /* Styling for table elements */
 table {
-    width: 100%; /* Make table use up all available horizontal space */
-    border-collapse: collapse; /* Borders between rows and columns are merged */
+    width: 100%;
+    border-collapse: collapse;
     margin-top: 20px;
+    border: 1px solid #ddd;
 }
 
 th, td {
+    padding: 20px;
     text-align: left;
-    padding: 8px;
-    border: 1px solid #ddd; /* Light grey border for each cell */
+    border-bottom: 1px solid #ddd;
 }
 
 th {
-    background-color: #f9f9f9; /* Slightly darker background for header cells */
+    background-color: #000000; /* Green background */
+    color: white; /* White text */
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+td.count {
+    text-align: right;
+}
+
+th.count-header {
+    text-align: right;
 }
 
 tr:nth-child(even) {
-    background-color: #f1f1f1; /* Zebra striping for rows */
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #ddd;
 }
 
 /* Button and link styles */
