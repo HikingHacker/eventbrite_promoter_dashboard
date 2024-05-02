@@ -17,13 +17,11 @@ function App() {
 
     useEffect(() => {
 
+        // instantly display cached data
         const fetchCachedData = async () => {
             try {
                 const promoCodesResponse = await axios.get(GET_CACHED_PROMO_CODES_URL);
                 if (JSON.stringify(promoCodesResponse.data) !== JSON.stringify(promoCodes)) {
-                    console.log("Getting data from the cache has completed")
-                    console.log("promoCodesResponse" + promoCodesResponse.data);
-
                     setPromoCodes(promoCodesResponse.data);
                 }
             } catch (error) {
@@ -33,13 +31,14 @@ function App() {
         }
         fetchCachedData();
 
+        // update with live data
         const fetchLiveData = async () => {
             try {
                 // get event schedule
                 const eventsResponse = await axios.get(GET_EVENTS_URL);
                 setEvents(eventsResponse.data);
 
-                // get live updated promocode counts
+                // get updated promo code counts
                 const promoCodesResponse = await axios.get(GET_PROMO_CODES_URL);
                 if (JSON.stringify(promoCodesResponse.data) !== JSON.stringify(promoCodes)) {
                     setPromoCodes(promoCodesResponse.data);
@@ -49,32 +48,32 @@ function App() {
                 console.error('Error fetching data:', error);
             }
         };
-
         fetchLiveData();
 
         const intervalId = setInterval(fetchLiveData, 3600000); // Fetch data every hour
         return () => clearInterval(intervalId); // Clear interval on unmount
     }, []);
 
-    // Formatting
+    // data formatting
     const filteredEvents = filterEventsByStartDate(events, new Date());
     const upcomingEvents = filteredEvents.slice(0, 3);
     const otherEvents = filteredEvents.slice(3);
 
-    // Find the highest count
+    // find promocode with highest count
     const highestCount = Math.max(...promoCodes.map(promoCode => promoCode[1]));
-    // Define a threshold
+    // vip threshold
     const threshold = 20; // Replace with your desired threshold
 
-    // Filter promoCodes into three separate arrays
+    // filter into MVP, VIP, and Promoters
     const highestCountPromoCodes = promoCodes.filter(promoCode => promoCode[1] === highestCount);
     const aboveThresholdPromoCodes = promoCodes.filter(promoCode => promoCode[1] >= threshold && promoCode[1] < highestCount);
     const remainingPromoCodes = promoCodes.filter(promoCode => promoCode[1] < threshold);
 
+
     return (
         <div>
             <div>
-                <h1 className="promoter-leader">Promoter Leader</h1>
+                <h1 className="promoter-leader">Promoter Leaderboard</h1>
 
                 <h2>👑 MVP 👑</h2>
                 {renderPromoCodesTable(highestCountPromoCodes)}

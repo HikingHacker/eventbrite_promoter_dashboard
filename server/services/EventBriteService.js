@@ -1,22 +1,23 @@
 /*
-Services: Contains the core business logic of the application. Services handle data
-processing, interact with the database, and perform specific operations required by
-the application. By isolating business logic in services, you ensure that it's decoupled
-from the web layer, which promotes reuse across different parts of the application and
-simplifies unit testing.
+ * Services: Contains the core business logic of the application. Services handle data
+ * processing, interact with the database, and perform specific operations required by
+ * the application. By isolating business logic in services, you ensure that it's decoupled
+ * from the web layer, which promotes reuse across different parts of the application and
+ * simplifies unit testing.
  */
 
 const axios = require('axios');
 const NodeCache = require('node-cache');
 const config = {
-    organizationId: process.env.EVENTBRITE_ORGANIZATION_ID || 'DEFAULT',
     eventBriteBaseUrl: process.env.EVENTBRITE_BASE_URL || 'DEFAULT',
+    organizationId: process.env.EVENTBRITE_ORGANIZATION_ID || 'DEFAULT',
     oauth_token: process.env.EVENTBRITE_TOKEN || 'DEFAULT'
 };
 
+// cache setup
 const SEVEN_DAY_IN_SECONDS = 7 * 86400;
-const PROMO_CODES_KEY = "aggregateData";
-const aggregatePromoCodesCache = new NodeCache({ stdTTL: SEVEN_DAY_IN_SECONDS });
+const PROMO_CODES_KEY = "aggregateData"; // TODO: use organization id as key
+const promoCodeCountCache = new NodeCache({ stdTTL: SEVEN_DAY_IN_SECONDS });
 
 async function fetchPaginatedData(url, params, key) {
     let page = 1;
@@ -104,14 +105,14 @@ async function fetchAndCountPromoCodes() {
     // combinePromoCodes(sortedPromoCodes) // TODO: add filtering logic
 
     // console.log(sortedPromoCodes); // Log the value being stored
-    const success = aggregatePromoCodesCache.set(PROMO_CODES_KEY, sortedPromoCodes);
+    const success = promoCodeCountCache.set(PROMO_CODES_KEY, sortedPromoCodes);
     // console.log(success); // Log whether the value was successfully stored
 
     return sortedPromoCodes;
 }
 
 function fetchPromoCodeCountsFromCache() {
-    return aggregatePromoCodesCache.get(PROMO_CODES_KEY) || null;
+    return promoCodeCountCache.get(PROMO_CODES_KEY) || null;
 }
 
 function removePromoCode(promoCodes, promoCodeToRemove) {

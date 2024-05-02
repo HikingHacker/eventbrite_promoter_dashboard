@@ -14,7 +14,7 @@ export function renderEventsTable(events) {
             <tbody>
             {events.map(event => (
                 <tr key={event.id}>
-                    <td>{event.name.text}</td>
+                    <td><a href={event.url} target="_blank" rel="noopener noreferrer">{event.name.text}</a></td>
                     <td>{formatDate(event.start)}</td>
                     <td>{formatDate(event.end)}</td>
                 </tr>
