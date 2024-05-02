@@ -44,8 +44,8 @@ function App() {
                     setPromoCodes(promoCodesResponse.data);
                 }
             } catch (error) {
-                setError('Error fetching data');
                 console.error('Error fetching data:', error);
+                setError('Error fetching data');
             }
         };
         fetchLiveData();
@@ -68,7 +68,6 @@ function App() {
     const highestCountPromoCodes = promoCodes.filter(promoCode => promoCode[1] === highestCount);
     const aboveThresholdPromoCodes = promoCodes.filter(promoCode => promoCode[1] >= threshold && promoCode[1] < highestCount);
     const remainingPromoCodes = promoCodes.filter(promoCode => promoCode[1] < threshold);
-
 
     return (
         <div>
