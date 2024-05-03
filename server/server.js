@@ -7,15 +7,15 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 const path = require('path');
 
-// const corsOptions = {
-//     origin: ['https://eventbrite-promoter-dashboard.vercel.app', 'https://wavegarden-a9640094dac7.herokuapp.com/'],
-//     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-// }
-//
-// const cors = require('cors');
-//
-// // Enable CORS for specific websites
-// app.use(cors(corsOptions));
+const corsOptions = {
+    origin: ['https://eventbrite-promoter-dashboard.vercel.app', 'https://wavegarden-a9640094dac7.herokuapp.com/'],
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+
+const cors = require('cors');
+
+// Enable CORS for specific websites
+app.use(cors(corsOptions));
 
 // Serve static files from the React app in production
 // if (process.env.NODE_ENV === 'local') {
