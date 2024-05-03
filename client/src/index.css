@@ -15,26 +15,35 @@ body {
 }
 
 /* Header styles */
-h1.promoter-leader {
+h1.promoter-leaderboard {
     font-size: 2.5em;
-    color: gold; /* Gold color */
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Text shadow for 3D effect */
-    text-transform: uppercase; /* Make the text uppercase */
-    letter-spacing: 2px; /* Increase spacing between letters */
+    color: #333;
+    font-family: "Slackey", sans-serif;
+    font-weight: 400;
+    font-style: normal;
     text-align: center;
-    margin-bottom: 20px;
     border-bottom: 5px solid black; /* Add a gold line under the header */
 }
 
-h1.promoter-leader.events {
+h1.promoter-leaderboard.events {
     color: black; /* Overwrite the color property */
+}
+
+/* Header styles */
+h1.events-text {
+    font-size: 2.5em;
+    color: #333;
+    font-family: "Slackey", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    text-align: center;
+    border-top: 5px solid black; /* Add a gold line under the header */
+    border-bottom: 5px solid black; /* Add a gold line under the header */
 }
 
 h1 {
     font-size: 2em;
     color: #444;
-    margin-bottom: 20px;
-    margin-top: 20px;
 }
 
 h2 {
