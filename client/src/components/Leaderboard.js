@@ -24,7 +24,7 @@ export function Leaderboard({ players }) {
                     const style = { color: "black" };
                     // Updated gradientClass logic
                     const gradientClass = (currentPage === 1 && index === 0) ? "gradient-box-mvp" :
-                        player[1] > 20 ? "gradient-box-vip" : "gradient-box-promoter";
+                        player[1] > 10  ? "gradient-box-vip" : "gradient-box-promoter";
                     // Determine if current entries are on the first page for medals
                     const emoji = (currentPage === 1 && (index === 0 || index === 1 || index === 2))
                         ? (index === 0 ? "🥇" : index === 1 ? "🥈" : "🥉")
