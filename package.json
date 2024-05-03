@@ -8,7 +8,7 @@
     "start:backend": "cd server && npm start",
     "start:frontend": "cd client && npm start",
     "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
-    "deploy": "git subtree push --prefix server heroku main"
+    "deploy-server": "git subtree push --prefix server heroku main"
   },
   "keywords": [],
   "author": "",
