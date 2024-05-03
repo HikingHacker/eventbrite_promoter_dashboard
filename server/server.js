@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 3001;
 const path = require('path');
 
 const corsOptions = {
-    origin: ['https://eventbrite-promoter-dashboard.vercel.app//'],
+    origin: ['https://eventbrite-promoter-dashboard.vercel.app'],
     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
 
