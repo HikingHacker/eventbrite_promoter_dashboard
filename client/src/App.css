@@ -159,7 +159,7 @@ body {
 
     background-clip: padding-box;
     border: solid var(--border) transparent; /* Change border color to transparent */
-    border-radius: 10px;
+    border-radius: 15px;
 }
 
 .gradient-box-mvp::before {
@@ -184,7 +184,7 @@ body {
     background: #ffffff;
     background-clip: padding-box;
     border: solid var(--border) transparent;
-    border-radius: 10px;
+    border-radius: 15px;
 }
 
 .gradient-box-vip::before {
@@ -209,7 +209,7 @@ body {
     background: #ffffff;
     background-clip: padding-box;
     border: solid var(--border) transparent;
-    border-radius: 10px;
+    border-radius: 15px;
 }
 
 .gradient-box-promoter::before {
@@ -226,6 +226,8 @@ body {
     font-weight: bold;
     font-size: 18px;
     padding-right: 10px; /* Add padding to the right */
+    min-width: 5ch;
+
 }
 
 /* You might want to add more styles for responsiveness and finer details */
