@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 export function Leaderboard({ players }) {
     const [currentPage, setCurrentPage] = useState(1);
-    const entriesPerPage = 8;
+    const entriesPerPage = 5;
 
     // Calculate the indices of the first and last entries on the current page
     const indexOfLastEntry = currentPage * entriesPerPage;
@@ -23,7 +23,7 @@ export function Leaderboard({ players }) {
 
 
     // Fill empty rows with "Refer A Friend" and score 0
-    const emptyRows = Array.from({ length: numEmptyRows }, () => (["Refer A Friend", 0]));
+    const emptyRows = Array.from({ length: numEmptyRows }, () => (["Refer A Promoter", 0]));
 
     const currentEntriesWithEmptyRows = [...currentEntries, ...emptyRows];
 
