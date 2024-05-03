@@ -1,7 +1,8 @@
 import React from "react";
 import {formatDate} from "../utils/utils";
 
-export function renderEventsTable(events) {
+export function EventsTable({ events }) {
+    JSON.stringify(events)
     return (
         <table>
             <thead>
@@ -23,3 +24,5 @@ export function renderEventsTable(events) {
         </table>
     );
 }
+
+export default EventsTable;

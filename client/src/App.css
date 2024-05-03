@@ -1,3 +1,14 @@
+/* Add this line at the top of your CSS file */
+@import url('https://fonts.googleapis.com/css2?family=Slackey&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+/*.slackey-regular {*/
+/*    font-family: "Slackey", sans-serif;*/
+/*    font-weight: 400;*/
+/*    font-style: normal;*/
+/*}*/
+
+
 /* Main App component styles */
 .app-container {
     max-width: 1200px;
@@ -13,27 +24,6 @@
     font-size: 2rem;
     color: #333;
     margin-bottom: 20px;
-}
-
-/* Table styles specific to App */
-.events-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-.events-table th, .events-table td {
-    padding: 12px;
-    border: 1px solid #ddd;
-    text-align: left;
-}
-
-.events-table th {
-    background-color: #f0f0f0;
-}
-
-.events-table tr:nth-child(even) {
-    background-color: #f9f9f9;
 }
 
 /* Styling for buttons in the App component */
@@ -63,6 +53,10 @@
     margin: 30px auto;
 }
 
+.app-content {
+    margin-top: 0; /* Adjust as needed */
+}
+
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
@@ -73,6 +67,172 @@
     color: #ff0000; /* Red for errors */
     font-size: 16px;
 }
+
+/* testing style */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 20px;
+}
+
+.leaderboard {
+    width: 100%;
+    max-width: 600px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.leaderboard h1, .leaderboard p {
+    text-align: center;
+}
+
+.table {
+    margin-top: 20px;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    /*background: #a3a3b7;*/
+    /*padding: 10px;*/
+    /*border-radius: 10px;*/
+    /*margin-bottom: 10px;*/
+}
+
+.row-special {
+    background: linear-gradient(to bottom right, #8a20fb, #1391fa), linear-gradient(white, white);
+    background-blend-mode: lighten;
+}
+
+.position {
+    width: 75px;
+    font-size: 24px;
+    color: #333;
+    font-family: "Slackey", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    padding: 10px;
+}
+
+.avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin: 0 10px;
+}
+
+.username {
+    flex: 1;
+}
+
+.user-score {
+    display: flex;
+    justify-content: space-between;
+    flex-grow: 1;
+    padding-left: 10px;
+    font-size: 24px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold; /* Make the text bold */
+}
+
+.gradient-border-wrapper {
+    background: linear-gradient(to bottom right, #8a20fb, #1391fa);
+    padding: 2px;
+    border-radius: 10px;
+}
+
+.gradient-border-inner {
+    background: white;
+    border-radius: 10px;
+}
+
+.gradient-box-mvp {
+    --border: 5px;
+
+    display: flex;
+
+    position: relative;
+    box-sizing: border-box;
+
+    background-clip: padding-box;
+    border: solid var(--border) transparent; /* Change border color to transparent */
+    border-radius: 15px;
+}
+
+.gradient-box-mvp::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    z-index: -1;
+    margin: calc(-1 * var(--border));
+    border-radius: inherit;
+    background: linear-gradient(to right, #8a20fb, #1391fa);
+}
+
+.gradient-box-vip {
+    --border: 5px;
+
+    display: flex;
+
+    position: relative;
+    box-sizing: border-box;
+
+    color: #FFF;
+    background: #ffffff;
+    background-clip: padding-box;
+    border: solid var(--border) transparent;
+    border-radius: 15px;
+}
+
+.gradient-box-vip::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    z-index: -1;
+    margin: calc(-1 * var(--border));
+    border-radius: inherit;
+    background: linear-gradient(to right, #8a20fb, #1391fa);
+}
+
+.gradient-box-promoter {
+    --border: 5px;
+
+    display: flex;
+
+    position: relative;
+    box-sizing: border-box;
+
+    color: #FFF;
+    background: #ffffff;
+    background-clip: padding-box;
+    border: solid var(--border) transparent;
+    border-radius: 15px;
+}
+
+.gradient-box-promoter::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    z-index: -1;
+    margin: calc(-1 * var(--border));
+    border-radius: inherit;
+    background: gray;
+}
+
+.score {
+    font-weight: bold;
+    font-size: 18px;
+    padding-right: 10px; /* Add padding to the right */
+    min-width: 5ch;
+
+}
+
+/* You might want to add more styles for responsiveness and finer details */
+
+
 
 /*
 .app-container: Styles the main container of your app, giving it a maximum width and centering it on the page. It also adds padding, background color, rounded corners, and a subtle box shadow for a card-like appearance.

@@ -96,7 +96,9 @@ async function fetchAndCountPromoCodes() {
         console.log("event.id: " + event.id);
         const promoCounts = await fetchPromoCodes(event.id);
         for (let [code, count] of Object.entries(promoCounts)) {
-            overallPromoCounts.set(code, (overallPromoCounts.get(code) || 0) + count);
+            if (code !== 'FREE_TICKET_DEV_TEST') { // Skip the user named "FREE_TICKET_DEV_TEST"
+                overallPromoCounts.set(code, (overallPromoCounts.get(code) || 0) + count);
+            }
         }
     }
     // sort and clean up the promo codes
