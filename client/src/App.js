@@ -5,10 +5,10 @@ import { filterEventsByStartDate } from './utils/utils';
 import { renderEventsTable } from './components/EventsTable';
 import { renderPromoCodesTable } from './components/PromoCodesTable';
 
-
-const GET_EVENTS_URL = `${process.env.REACT_APP_API_URL}/api/events/getEvents`;
-const GET_PROMO_CODES_URL = `${process.env.REACT_APP_API_URL}/api/events/aggregate`;
-const GET_CACHED_PROMO_CODES_URL = `${process.env.REACT_APP_API_URL}/api/events/aggregateCached`;
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
+const GET_EVENTS_URL = `${API_URL}/api/events/getEvents`;
+const GET_PROMO_CODES_URL = `${API_URL}/api/events/aggregate`;
+const GET_CACHED_PROMO_CODES_URL = `${API_URL}/api/events/aggregateCached`;
 
 function App() {
     const [events, setEvents] = useState([]);
