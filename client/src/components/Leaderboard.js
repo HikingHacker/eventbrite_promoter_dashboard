@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 export function Leaderboard({ players }) {
     const [currentPage, setCurrentPage] = useState(1);
-    const entriesPerPage = 10;
+    const entriesPerPage = 8;
 
     // Calculate the indices of the first and last entries on the current page
     const indexOfLastEntry = currentPage * entriesPerPage;
@@ -17,14 +17,25 @@ export function Leaderboard({ players }) {
         if (currentPage > 1) setCurrentPage(prev => prev - 1);
     };
 
+    // Determine the number of empty rows needed
+    const numPlayersOnCurrentPage = Math.min(players.length - indexOfFirstEntry, entriesPerPage);
+    const numEmptyRows = Math.max(entriesPerPage - numPlayersOnCurrentPage, 0);
+
+
+    // Fill empty rows with "Refer A Friend" and score 0
+    const emptyRows = Array.from({ length: numEmptyRows }, () => (["Refer A Friend", 0]));
+
+    const currentEntriesWithEmptyRows = [...currentEntries, ...emptyRows];
+
     return (
         <div>
+            <h1 className="promoter-leaderboard">LEADERBOARD</h1>
             <div className="table">
-                {currentEntries.map((player, index) => {
-                    const style = { color: "black" };
+                {currentEntriesWithEmptyRows.map((player, index) => {
+                    const style = {color: (currentPage === 1 && index === 0) ? "white" : "black" };
                     // Updated gradientClass logic
                     const gradientClass = (currentPage === 1 && index === 0) ? "gradient-box-mvp" :
-                        player[1] > 10  ? "gradient-box-vip" : "gradient-box-promoter";
+                        player[1] >= 20  ? "gradient-box-vip" : "gradient-box-promoter";
                     // Determine if current entries are on the first page for medals
                     const emoji = (currentPage === 1 && (index === 0 || index === 1 || index === 2))
                         ? (index === 0 ? "🥇" : index === 1 ? "🥈" : "🥉")

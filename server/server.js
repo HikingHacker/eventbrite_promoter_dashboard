@@ -7,8 +7,10 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 const path = require('path');
 
+const VERCEL_CUSTOM_URL = 'https://wavegarden-promoter-dashboard.vercel.app'
+const VERCEL_DEFAULT_URL = 'https://wavegarden-promoter-dashboard-git-local-hikinghackers-projects.vercel.app/'
 const corsOptions = {
-    origin: ['https://wavegarden-promoter-dashboard.vercel.app'],
+    origin: [VERCEL_CUSTOM_URL, VERCEL_DEFAULT_URL],
     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
 

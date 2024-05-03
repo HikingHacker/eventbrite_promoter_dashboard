@@ -16,7 +16,6 @@ function App() {
     return (
         <div className="app-content">
             <div>
-                <h1 className="promoter-leaderboard">LEADERBOARD</h1>
                 <Leaderboard players={promoCodes} />
             </div>
             <div className="upcoming-events">
