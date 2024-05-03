@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 3001;
 const path = require('path');
 
 const corsOptions = {
-    origin: ['wavegarden-promoter-dashboard.vercel.app', 'https://wavegarden-a9640094dac7.herokuapp.com/'],
+    origin: ['https://wavegarden-promoter-dashboard.vercel.app'],
     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
 
