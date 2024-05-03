@@ -5,14 +5,17 @@ const eventBriteRoutes = require('./routes/EventBriteRouter.js');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+const path = require('path');
 
 // // Enable CORS // app.use(cors()); //const cors = require('cors');
 
 // Serve static files from the React app in production
-if (process.env.NODE_ENV === 'production') {
-// Serve static files from the 'public' directory
-    app.use(express.static(path.join(__dirname, 'public')));
-}
+// if (process.env.NODE_ENV === 'local') {
+// // Serve static files from the 'public' directory
+//     app.use(express.static(path.join(__dirname, 'public')));
+// }
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 // Parse JSON bodies
 app.use(express.json());
