@@ -9,7 +9,7 @@ const path = require('path');
 
 const VERCEL_CUSTOM_URL = 'https://wavegarden-promoter-dashboard.vercel.app'
 const VERCEL_DEFAULT_INT_URL = 'https://wavegarden-promoter-dashboard-git-local-hikinghackers-projects.vercel.app/'
-const VERCEL_DEFAULT_STAGED_PROD_URL = 'wavegarden-promoter-dashboard-hikinghackers-projects.vercel.app'
+const VERCEL_DEFAULT_STAGED_PROD_URL = 'https://wavegarden-promoter-dashboard-hikinghackers-projects.vercel.app'
 const corsOptions = {
     origin: [VERCEL_CUSTOM_URL, VERCEL_DEFAULT_INT_URL, VERCEL_DEFAULT_STAGED_PROD_URL],
     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
