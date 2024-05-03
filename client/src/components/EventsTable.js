@@ -1,23 +1,16 @@
 import React from "react";
-import {formatDate} from "../utils/utils";
+import {formatDay, FormattedDay, formatTimeRange} from "../utils/utils";
 
 export function EventsTable({ events }) {
-    JSON.stringify(events)
     return (
         <table>
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Start</th>
-                <th>End</th>
-            </tr>
-            </thead>
             <tbody>
             {events.map(event => (
                 <tr key={event.id}>
-                    <td><a href={event.url} target="_blank" rel="noopener noreferrer">{event.name.text}</a></td>
-                    <td>{formatDate(event.start)}</td>
-                    <td>{formatDate(event.end)}</td>
+                    <td>{FormattedDay(event.start)}</td>
+                    <td>
+                        <div><a href={event.url} target="_blank" rel="noopener noreferrer">{event.name.text}</a></div>
+                        <div style={{marginTop: '5px'}}>{formatTimeRange(event.start, event.end)}</div>                    </td>
                 </tr>
             ))}
             </tbody>

@@ -90,12 +90,17 @@ body {
 }
 
 .table {
-    margin-top: 20px;
+    margin-top: 5px;
+}
+
+td {
+    padding: 10px; /* Adjust as needed */
 }
 
 .row {
     display: flex;
     align-items: center;
+    justify-content: center;
     /*background: #a3a3b7;*/
     /*padding: 10px;*/
     /*border-radius: 10px;*/
@@ -124,8 +129,13 @@ body {
     margin: 0 10px;
 }
 
+.body {
+    padding: 10px;
+}
+
 .username {
     flex: 1;
+    padding: 10px 0 10px 5px; /* Adjust as needed */
 }
 
 .user-score {
@@ -136,6 +146,8 @@ body {
     font-size: 24px;
     font-family: 'Roboto', sans-serif;
     font-weight: bold; /* Make the text bold */
+    max-width: 600px;
+
 }
 
 .gradient-border-wrapper {
@@ -223,11 +235,26 @@ body {
 }
 
 .score {
+    display: flex;
+    justify-content: flex-end;
     font-weight: bold;
     font-size: 18px;
     padding-right: 10px; /* Add padding to the right */
     min-width: 5ch;
+}
 
+.timeline {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.timeline-segment {
+    width: 100px; /* Adjust as needed */
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
 /* You might want to add more styles for responsiveness and finer details */
