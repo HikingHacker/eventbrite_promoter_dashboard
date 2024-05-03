@@ -6,9 +6,9 @@ import { renderEventsTable } from './components/EventsTable';
 import { renderPromoCodesTable } from './components/PromoCodesTable';
 
 
-const GET_EVENTS_URL = '/api/events/getEvents';
-const GET_PROMO_CODES_URL = '/api/events/aggregate';
-const GET_CACHED_PROMO_CODES_URL = '/api/events/aggregateCached';
+const GET_EVENTS_URL = `${process.env.REACT_APP_API_URL}/api/events/getEvents`;
+const GET_PROMO_CODES_URL = `${process.env.REACT_APP_API_URL}/api/events/aggregate`;
+const GET_CACHED_PROMO_CODES_URL = `${process.env.REACT_APP_API_URL}/api/events/aggregateCached`;
 
 function App() {
     const [events, setEvents] = useState([]);

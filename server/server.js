@@ -1,14 +1,18 @@
 require('dotenv').config();
 const express = require('express');
 const eventBriteRoutes = require('./routes/EventBriteRouter.js');
-const rateLimit = require('express-rate-limit');
+// const rateLimit = require('express-rate-limit');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// // Enable CORS
-// app.use(cors());
-//const cors = require('cors');
+// // Enable CORS // app.use(cors()); //const cors = require('cors');
+
+// Serve static files from the React app in production
+if (process.env.NODE_ENV === 'production') {
+// Serve static files from the 'public' directory
+    app.use(express.static(path.join(__dirname, 'public')));
+}
 
 // Parse JSON bodies
 app.use(express.json());
