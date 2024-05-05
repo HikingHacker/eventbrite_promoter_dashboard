@@ -71,6 +71,7 @@ export function Leaderboard({ players }) {
                 })}
             </div>
 
+
             <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px', marginBottom: '15px', gap: '10px' }}>
                 <button onClick={prevPage} disabled={currentPage === 1} style={{ width: '50%', padding: '15px', backgroundColor: (currentPage === 1) ? 'darkgray' : 'black', color: 'white', boxShadow: '3px 3px 5px rgba(0, 0, 0, 0.3)' }}>
                     PREVIOUS
