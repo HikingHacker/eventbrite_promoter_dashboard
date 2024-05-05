@@ -10,10 +10,6 @@ const express = require('express');
 const router = express.Router();
 const eventsController = require('../controllers/EventBriteController.js');
 
-// future naming
-// const url = `${config.eventBriteBaseUrl}events/${eventId}/attendees/`;
-// ${config.eventBriteBaseUrl}organizations/${config.organizationId}/events/`
-
 /*
 // Fetch events for a specific organization
 router.get('/organizations/:orgId/events', eventsController.fetchOrganizationEvents);

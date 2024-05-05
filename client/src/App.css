@@ -26,6 +26,11 @@
     margin-bottom: 20px;
 }
 
+#month {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
 /* Styling for buttons in the App component */
 .app-button {
     cursor: pointer;
@@ -73,12 +78,11 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f9;
     margin: 0;
-    padding: 20px;
+    padding: 10px 10px 10px 10px;
 }
 
 .leaderboard {
     width: 100%;
-    max-width: 600px;
     margin: auto;
     background: white;
     padding: 20px;
@@ -94,7 +98,43 @@ body {
 }
 
 td {
-    padding: 10px; /* Adjust as needed */
+    margin-top: 5px;
+    padding: 10px 10px 10px 15px; /* Adjust as needed */
+
+}
+
+.day-and-month {
+    font-size: 20px; /* Adjust as needed */
+    align-self: flex-start;
+}
+
+.promo-code-container {
+    display: flex;
+    align-items: center;
+    background-color: black;
+    color: white;
+    padding: 5px;
+    font-size: 14px;
+}
+
+#promoCode {
+    margin-left: 5px;
+    margin-right: 5px;
+    flex-grow: 1;
+    padding: 5px;
+    border: 1px solid gray;
+    background-color: white;
+    color: black;
+}
+
+button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+button img {
+    height: 20px; /* Adjust based on your checkmark icon's dimensions */
 }
 
 .row {
@@ -129,10 +169,6 @@ td {
     margin: 0 10px;
 }
 
-.body {
-    padding: 10px;
-}
-
 .username {
     flex: 1;
     padding: 10px 0 10px 5px; /* Adjust as needed */
@@ -146,8 +182,6 @@ td {
     font-size: 24px;
     font-family: 'Roboto', sans-serif;
     font-weight: bold; /* Make the text bold */
-    max-width: 600px;
-
 }
 
 .gradient-border-wrapper {
@@ -159,6 +193,11 @@ td {
 .gradient-border-inner {
     background: white;
     border-radius: 10px;
+}
+
+.day-of-week {
+    font-weight: bold;
+    text-transform: uppercase;
 }
 
 .gradient-box-mvp {
@@ -249,12 +288,55 @@ td {
     width: 100%;
 }
 
+.day-and-month {
+    font-family: 'Roboto', sans-serif;
+}
+
 .timeline-segment {
     width: 100px; /* Adjust as needed */
     margin: 10px;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
+}
+
+.filter-buttons {
+    display: flex;
+    background-color: black;
+    border-radius: 10px;
+    padding: 10px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 900; /* Make the font thicker */
+}
+
+.filter-button {
+    flex: 1;
+    color: white;
+    background-color: black;
+    border: none;
+    padding: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;  /* Centers the content vertically */
+    justify-content: center; /* Centers the content horizontally */
+}
+
+.filter-button:hover {
+    background-color: grey;
+}
+
+.active {
+    background-color: white;
+    color: black;
+}
+
+/* This style removes the focus outline when buttons are clicked */
+.filter-button:focus {
+    outline: none;
 }
 
 /* You might want to add more styles for responsiveness and finer details */

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { filterEventsByStartDate } from '../utils/utils';
+import { filterEvents } from '../utils/utils';
 
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
 
@@ -13,7 +13,7 @@ export function useEventData() {
             try {
                 const response = await axios.get(`${API_URL}/api/events/getEvents`);
                 console.log("getEvents: " + JSON.stringify(response));
-                setEvents(filterEventsByStartDate(response.data, new Date()));
+                setEvents(filterEvents(response.data, new Date()));
             } catch (err) {
                 setError('Failed to fetch events');
                 console.error('Error fetching events:', err);
@@ -24,8 +24,7 @@ export function useEventData() {
     }, []);
 
     return {
-        upcomingEvents: events.slice(0, 3),
-        otherEvents: events.slice(3),
+        upcomingEvents: events,
         error
     };
 }
