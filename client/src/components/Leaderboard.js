@@ -23,13 +23,28 @@ export function Leaderboard({ players }) {
 
 
     // Fill empty rows with "Refer A Friend" and score 0
-    const emptyRows = Array.from({ length: numEmptyRows }, () => (["Refer A Promoter", 0]));
+    const emptyRows = Array.from({ length: numEmptyRows }, () => (["EMPTY", 0]));
 
     const currentEntriesWithEmptyRows = [...currentEntries, ...emptyRows];
+
+    // document.querySelectorAll('.filter-button').forEach(button => {
+    //     button.addEventListener('click', function() {
+    //         document.querySelectorAll('.filter-button').forEach(btn => btn.classList.remove('active'));
+    //         this.classList.add('active');
+    //     });
+    // });
+
 
     return (
         <div>
             <h1 className="promoter-leaderboard">LEADERBOARD</h1>
+            {/*<br></br>*/}
+            {/*<div className="filter-buttons">*/}
+            {/*    <button id="all" className="filter-button">ALL</button>*/}
+            {/*    <button id="month" className="filter-button active">MONTH</button>*/}
+            {/*    <button id="week" className="filter-button">WEEK</button>*/}
+            {/*</div>*/}
+
             <div className="table">
                 {currentEntriesWithEmptyRows.map((player, index) => {
                     const style = {color: (currentPage === 1 && index === 0) ? "white" : "black" };
@@ -56,12 +71,12 @@ export function Leaderboard({ players }) {
                 })}
             </div>
 
-            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px', marginBottom: '20px', gap: '10px' }}>
-                <button onClick={prevPage} disabled={currentPage === 1} style={{ width: '100px', padding: '10px' }}>
-                    Previous
+            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px', marginBottom: '15px', gap: '10px' }}>
+                <button onClick={prevPage} disabled={currentPage === 1} style={{ width: '50%', padding: '15px', backgroundColor: (currentPage === 1) ? 'darkgray' : 'black', color: 'white', boxShadow: '3px 3px 5px rgba(0, 0, 0, 0.3)' }}>
+                    PREVIOUS
                 </button>
-                <button onClick={nextPage} disabled={currentPage * entriesPerPage >= players.length} style={{ width: '100px', padding: '10px' }}>
-                    Next
+                <button onClick={nextPage} disabled={currentPage * entriesPerPage >= players.length} style={{ width: '50%', padding: '10px', backgroundColor: (currentPage * entriesPerPage >= players.length) ? 'darkgray' : 'black', color: 'white', boxShadow: '3px 3px 5px rgba(0, 0, 0, 0.3)' }}>
+                    NEXT
                 </button>
             </div>
         </div>

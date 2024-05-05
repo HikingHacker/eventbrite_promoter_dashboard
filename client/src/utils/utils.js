@@ -1,25 +1,26 @@
 const {format} = require("date-fns");
 
-export function filterEventsByStartDate(events, startDate) {
-    return events.filter(event => new Date(event.start.utc) > new Date(startDate));
+export function filterEventName(eventName) {
+    const regex = /\b(Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday) \d{1,2}\/\d{1,2}\b \|/;
+    return eventName.replace(regex, "").trim();
 }
 
-export function formatDate(event) {
-    return new Date(event.utc).toLocaleDateString() + ' ' + new Date(event.utc).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+// only display valid future events
+export function filterEvents(events, startDate) {
+    return events
+        .filter(event => !event.deleted)
+        .filter(event => new Date(event.end.utc) > new Date(startDate))
+        .filter(event => event.status === "live" && event.listed == true);
 }
 
-export function formatDay(event) {
-    return new Date(event.utc).toLocaleDateString('en-US', { weekday: 'short', day: 'numeric' });
-}
-
-export function FormattedDay(event) {
-    const dayOfMonth = new Date(event.utc).toLocaleDateString('en-US', { day: 'numeric' });
+export function formatDayAndMonth(event) {
+    const dayOfMonth = new Date(event.utc).toLocaleDateString('en-US', { month: 'numeric', day: 'numeric' });
     const dayOfWeek = new Date(event.utc).toLocaleDateString('en-US', { weekday: 'short' });
 
     return (
-        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
-            <div>{dayOfWeek}</div>
-            <div style={{border: '2px solid blue', borderRadius: '200%', padding: '5px', width: '30px', textAlign: 'center'}}>{dayOfMonth}</div>
+        <div className="day-and-month" style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
+            <div className="day-of-week">{dayOfWeek}</div>
+            <div className="day-of-week">{dayOfMonth}</div>
         </div>
     );
 }
@@ -33,7 +34,7 @@ export function formatTimeRange(start, end) {
         // Custom formatter to remove ':00' when minutes are zero
         const customFormat = (date) => {
             const formatted = format(date, 'h:mm a');
-            return formatted.endsWith(':00') ? formatted.slice(0, -6) + formatted.slice(-3) : formatted;
+            return formatted.replace(/:00(?=\s|$)/g, '');
         };
 
         // Format the start and end times using the custom formatter

@@ -6,7 +6,7 @@ import Leaderboard from './components/Leaderboard';
 import EventsTable from './components/EventsTable';
 
 function App() {
-    const { upcomingEvents, otherEvents, error } = useEventData();
+    const { upcomingEvents, error } = useEventData();
     const { promoCodes } = usePromoCodes();
 
     if (error) {
@@ -19,12 +19,8 @@ function App() {
                 <Leaderboard players={promoCodes} />
             </div>
             <div className="upcoming-events">
-                <h1 className="events-text">THIS WEEK</h1>
+                <h1 className="events-text">EVENTS</h1>
                 <EventsTable events={upcomingEvents} />
-            </div>
-            <div className="other-events">
-                <h1 className="events-text">FUTURE</h1>
-                <EventsTable events={otherEvents} />
             </div>
         </div>
     );
