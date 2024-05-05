@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 export function Leaderboard({ players }) {
     const [currentPage, setCurrentPage] = useState(1);
-    const entriesPerPage = 5;
+    const entriesPerPage = 8;
 
     // Calculate the indices of the first and last entries on the current page
     const indexOfLastEntry = currentPage * entriesPerPage;
