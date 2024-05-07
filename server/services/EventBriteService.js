@@ -15,9 +15,8 @@ const config = {
 };
 
 // cache setup
-const SEVEN_DAY_IN_SECONDS = 7 * 86400;
 const PROMO_CODES_KEY = "aggregateData"; // TODO: use organization id as key
-const promoCodeCountCache = new NodeCache({ stdTTL: SEVEN_DAY_IN_SECONDS });
+const promoCodeCountCache = new NodeCache({ stdTTL: 0 }); // cache with no expiration
 
 async function fetchPaginatedData(url, params, key) {
     let page = 1;
@@ -87,8 +86,28 @@ async function fetchPromoCodes(eventId) {
     return promoCounts;
 }
 
-async function fetchAndCountPromoCodes() {
-    const events = await fetchOrganizationEvents();
+async function fetchAndCountPromoCodes(timeFrame) {
+    let events;
+    const currentDate = new Date();
+    const oneWeekAgo = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - 7);
+    const oneMonthAgo = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, currentDate.getDate());
+
+    timeFrame = 'ALL'; // TODO: Add logic to handle different time frames
+
+    switch (timeFrame) {
+        case 'ALL':
+            events = await fetchOrganizationEvents();
+            break;
+        case 'MONTH':
+            events = (await fetchOrganizationEvents()).filter(event => new Date(event.start.utc) >= oneMonthAgo);
+            break;
+        case 'WEEK':
+            events = (await fetchOrganizationEvents()).filter(event => new Date(event.start.utc) >= oneWeekAgo);
+            break;
+        default:
+            throw new Error(`Invalid time frame: ${timeFrame}`);
+    }
+
     console.log("events.count:" + events.length);
 
     const overallPromoCounts = new Map();
@@ -96,7 +115,7 @@ async function fetchAndCountPromoCodes() {
         console.log("event.id: " + event.id);
         const promoCounts = await fetchPromoCodes(event.id);
         for (let [code, count] of Object.entries(promoCounts)) {
-            if (code !== 'FREE_TICKET_DEV_TEST') { // Skip the user named "FREE_TICKET_DEV_TEST"
+            if (code !== 'FREE_TICKET_DEV_TEST') { // Filter the user named "FREE_TICKET_DEV_TEST"
                 overallPromoCounts.set(code, (overallPromoCounts.get(code) || 0) + count);
             }
         }
@@ -106,9 +125,8 @@ async function fetchAndCountPromoCodes() {
     // removePromoCode(sortedPromoCodes, 'FREE_TICKET_DEV_TEST');
     // combinePromoCodes(sortedPromoCodes) // TODO: add filtering logic
 
-    // console.log(sortedPromoCodes); // Log the value being stored
-    const success = promoCodeCountCache.set(PROMO_CODES_KEY, sortedPromoCodes);
-    // console.log(success); // Log whether the value was successfully stored
+    // TODO: update cache for ALL, MONTH & WEEK
+    promoCodeCountCache.set(PROMO_CODES_KEY, sortedPromoCodes);
 
     return sortedPromoCodes;
 }

@@ -9,6 +9,15 @@ export function Leaderboard({ players }) {
     const indexOfFirstEntry = indexOfLastEntry - entriesPerPage;
     const currentEntries = players.slice(indexOfFirstEntry, indexOfLastEntry);
 
+    // change time filter
+    const handleButtonClick = (event) => {
+        // Remove 'active' class from all buttons
+        document.querySelectorAll('.filter-button').forEach(btn => btn.classList.remove('active'));
+
+        // Add 'active' class to the clicked button
+        event.target.classList.add('active');
+    };
+
     // Change page handlers
     const nextPage = () => {
         setCurrentPage(prev => prev + 1);
@@ -27,12 +36,12 @@ export function Leaderboard({ players }) {
 
     const currentEntriesWithEmptyRows = [...currentEntries, ...emptyRows];
 
-    // document.querySelectorAll('.filter-button').forEach(button => {
-    //     button.addEventListener('click', function() {
-    //         document.querySelectorAll('.filter-button').forEach(btn => btn.classList.remove('active'));
-    //         this.classList.add('active');
-    //     });
-    // });
+    document.querySelectorAll('.filter-button').forEach(button => {
+        button.addEventListener('click', function() {
+            document.querySelectorAll('.filter-button').forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
 
 
     return (
@@ -40,9 +49,9 @@ export function Leaderboard({ players }) {
             <h1 className="promoter-leaderboard">LEADERBOARD</h1>
             {/*<br></br>*/}
             {/*<div className="filter-buttons">*/}
-            {/*    <button id="all" className="filter-button">ALL</button>*/}
-            {/*    <button id="month" className="filter-button active">MONTH</button>*/}
-            {/*    <button id="week" className="filter-button">WEEK</button>*/}
+            {/*    <button id="all" className="filter-button" onClick={handleButtonClick}>ALL</button>*/}
+            {/*    <button id="month" className="filter-button active" onClick={handleButtonClick}>MONTH</button>*/}
+            {/*    <button id="week" className="filter-button" onClick={handleButtonClick}>WEEK</button>*/}
             {/*</div>*/}
 
             <div className="table">

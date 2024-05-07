@@ -22,6 +22,8 @@ h1.promoter-leaderboard {
     font-weight: 400;
     font-style: normal;
     text-align: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
     border-top: 5px solid black; /* Add a gold line under the header */
     border-bottom: 5px solid black; /* Add a gold line under the header */
 }
