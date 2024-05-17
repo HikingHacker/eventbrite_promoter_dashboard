@@ -13,6 +13,9 @@ const eventsController = require('../controllers/EventBriteController.js');
 /*
 // Fetch events for a specific organization
 router.get('/organizations/:orgId/events', eventsController.fetchOrganizationEvents);
+// Fetch cached events for a specific organization
+router.get('/organizations/:orgId/events/cached', eventsController.fetchOrganizationEvents);
+
 // Fetch promo codes for a specific event
 router.get('/events/:eventId/promocodes', eventsController.fetchEventPromoCodes);
 // Fetch current counts of promo codes for all events within an organization

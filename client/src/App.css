@@ -78,7 +78,7 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f9;
     margin: 0;
-    padding: 10px 10px 10px 10px;
+    padding: 20px 20px 20px 20px;
 }
 
 .leaderboard {
@@ -304,7 +304,7 @@ button img {
     display: flex;
     background-color: black;
     border-radius: 10px;
-    padding: 10px;
+    padding: 10px 10px 10px 10px;
     text-transform: uppercase;
     font-weight: bold;
     font-family: 'Roboto', sans-serif;
