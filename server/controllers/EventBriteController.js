@@ -43,7 +43,7 @@ exports.fetchAndCountPromoCodes = async (req, res) => {
 // Fetches the cached promo code counts.
 exports.fetchPromoCodeCountsFromCache = async (req, res) => {
     try {
-        const promoCodeCounts = eventBriteService.fetchPromoCodeCountsFromCache();
+        const promoCodeCounts = await eventBriteService.fetchPromoCodeCountsFromCache();
         if (promoCodeCounts !== null) {
             formatResponse(res, promoCodeCounts);
         } else {

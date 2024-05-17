@@ -14,6 +14,9 @@ const config = {
     oauth_token: process.env.EVENTBRITE_TOKEN || 'DEFAULT'
 };
 
+const { kv } = require('@vercel/kv');
+
+
 // cache setup
 const PROMO_CODES_KEY = "aggregateData"; // TODO: use organization id as key
 const promoCodeCountCache = new NodeCache({ stdTTL: 0 }); // cache with no expiration
@@ -127,12 +130,13 @@ async function fetchAndCountPromoCodes(timeFrame) {
 
     // TODO: update cache for ALL, MONTH & WEEK
     promoCodeCountCache.set(PROMO_CODES_KEY, sortedPromoCodes);
+    await kv.set(PROMO_CODES_KEY, sortedPromoCodes);
 
     return sortedPromoCodes;
 }
 
-function fetchPromoCodeCountsFromCache() {
-    return promoCodeCountCache.get(PROMO_CODES_KEY) || null;
+async function fetchPromoCodeCountsFromCache() {
+    return await kv.get(PROMO_CODES_KEY) || null;
 }
 
 function removePromoCode(promoCodes, promoCodeToRemove) {
