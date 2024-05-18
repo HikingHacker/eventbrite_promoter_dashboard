@@ -341,6 +341,35 @@ button img {
 
 /* You might want to add more styles for responsiveness and finer details */
 
+/* app.css */
+.promo-container {
+    display: flex;
+    align-items: center;
+    background-color: black;
+    padding: 10px;
+    border-radius: 10px;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.promo-container input[type="text"] {
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    margin-left: 10px;
+    font-size: 16px;
+}
+
+.promo-container button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.events-table {
+    margin-top: 20px;
+}
 
 
 /*
