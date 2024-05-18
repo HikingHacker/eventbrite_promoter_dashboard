@@ -50,8 +50,8 @@ export function usePromoCodes() {
     useEffect(() => {
         const fetchPromoCodes = async () => {
             try {
-                const response = await axios.get(`${API_URL}/api/events/aggregate`);
-                setPromoCodes(response.data);
+                await axios.get(`${API_URL}/api/events/aggregate`);
+                // setPromoCodes(response.data);
             } catch (err) {
                 console.error('Error fetching promo codes:', err);
             }

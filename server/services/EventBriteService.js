@@ -1,13 +1,4 @@
-/*
- * Services: Contains the core business logic of the application. Services handle data
- * processing, interact with the database, and perform specific operations required by
- * the application. By isolating business logic in services, you ensure that it's decoupled
- * from the web layer, which promotes reuse across different parts of the application and
- * simplifies unit testing.
- */
-
 const axios = require('axios');
-const NodeCache = require('node-cache');
 const config = {
     eventBriteBaseUrl: process.env.EVENTBRITE_BASE_URL || 'DEFAULT',
     organizationId: process.env.EVENTBRITE_ORGANIZATION_ID || 'DEFAULT',
@@ -16,12 +7,7 @@ const config = {
 
 const { kv } = require('@vercel/kv');
 
-
-// cache setup
-const PROMO_CODES_KEY = "aggregateData"; // TODO: use organization id as key
-const promoCodeCountCache = new NodeCache({ stdTTL: 0 }); // cache with no expiration
-
-async function fetchPaginatedData(url, params, key) {
+async function fetchPaginatedEvents(url, params, key) {
     let page = 1;
     let allData = [];
     while (true) {
@@ -62,21 +48,12 @@ async function fetchOrganizationEvents() {
     return response.data.events;
 }
 
-async function fetchPaginatedEvents() {
-    const url = `${config.eventBriteBaseUrl}organizations/${config.organizationId}/events/`;
-    const params = {
-        time_filter: 'all',
-        order_by: 'start_asc'
-    };
-    return fetchPaginatedData(url, params, 'events');
-}
-
 async function fetchPromoCodes(eventId) {
     const url = `${config.eventBriteBaseUrl}events/${eventId}/attendees/`;
     const params = {
         expand: 'promotional_code'
     };
-    const attendees = await fetchPaginatedData(url, params, 'attendees');
+    const attendees = await fetchPaginatedEvents(url, params, 'attendees');
     const promoCounts = {};
     attendees.forEach(attendee => {
         if (attendee && attendee.promotional_code) {
@@ -86,84 +63,94 @@ async function fetchPromoCodes(eventId) {
             }
         }
     });
-    return promoCounts;
+    return Object.entries(promoCounts); // Convert to 2D array format [PROMOCODE, COUNT]
 }
 
-async function fetchAndCountPromoCodes(timeFrame) {
-    let events;
+const PROMO_CODES_KEY = {
+    ALL: 'promoCodes:ALL',
+    MONTH: 'promoCodes:MONTH',
+    WEEK: 'promoCodes:WEEK'
+};
+
+async function fetchAndCountPromoCodes() {
     const currentDate = new Date();
     const oneWeekAgo = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - 7);
     const oneMonthAgo = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, currentDate.getDate());
 
-    timeFrame = 'ALL'; // TODO: Add logic to handle different time frames
+    const timeFrames = {
+        ALL: () => true,
+        MONTH: event => new Date(event.start.utc) >= oneMonthAgo,
+        WEEK: event => new Date(event.start.utc) >= oneWeekAgo
+    };
 
-    switch (timeFrame) {
-        case 'ALL':
-            events = await fetchOrganizationEvents();
-            break;
-        case 'MONTH':
-            events = (await fetchOrganizationEvents()).filter(event => new Date(event.start.utc) >= oneMonthAgo);
-            break;
-        case 'WEEK':
-            events = (await fetchOrganizationEvents()).filter(event => new Date(event.start.utc) >= oneWeekAgo);
-            break;
-        default:
-            throw new Error(`Invalid time frame: ${timeFrame}`);
+    const allEvents = await fetchOrganizationEvents();
+    const allPromoCounts = await countPromoCodes(allEvents);
+
+    const promoCodeCounts = {
+        ALL: filterPromoCounts(allPromoCounts, timeFrames.ALL),
+        MONTH: filterPromoCounts(allPromoCounts, timeFrames.MONTH),
+        WEEK: filterPromoCounts(allPromoCounts, timeFrames.WEEK)
+    };
+
+    console.log("Updating Redis cache");
+    for (const [timeFrame, promoCounts] of Object.entries(promoCodeCounts)) {
+        await updateCache(timeFrame, promoCounts);
     }
 
-    console.log("events.count:" + events.length);
+    return promoCodeCounts.ALL;
+}
 
-    const overallPromoCounts = new Map();
+async function countPromoCodes(events) {
+    const overallPromoCounts = [];
     for (let event of events) {
         console.log("event.id: " + event.id);
         const promoCounts = await fetchPromoCodes(event.id);
-        for (let [code, count] of Object.entries(promoCounts)) {
-            if (code !== 'FREE_TICKET_DEV_TEST') { // Filter the user named "FREE_TICKET_DEV_TEST"
-                overallPromoCounts.set(code, (overallPromoCounts.get(code) || 0) + count);
-            }
+        overallPromoCounts.push({
+            eventDate: event.start.utc,
+            promoCounts
+        });
+    }
+    return overallPromoCounts; // Return array of {eventDate, promoCounts}
+}
+
+function filterPromoCounts(allPromoCounts, filterFn) {
+    const filteredPromoCounts = new Map();
+    for (const { eventDate, promoCounts } of allPromoCounts) {
+        if (filterFn({ start: { utc: eventDate } })) { // Adjust the filtering logic based on the event's start time
+            promoCounts.forEach(([code, count]) => {
+                if (code !== 'FREE_TICKET_DEV_TEST') {
+                    filteredPromoCounts.set(code, (filteredPromoCounts.get(code) || 0) + count);
+                }
+            });
         }
     }
-    // sort and clean up the promo codes
-    const sortedPromoCodes = [...overallPromoCounts.entries()].sort((a, b) => b[1] - a[1]);
-    // removePromoCode(sortedPromoCodes, 'FREE_TICKET_DEV_TEST');
-    // combinePromoCodes(sortedPromoCodes) // TODO: add filtering logic
+    return [...filteredPromoCounts.entries()].sort((a, b) => b[1] - a[1]); // Return as 2D array format [PROMOCODE, COUNT]
+}
 
-    // TODO: update cache for ALL, MONTH & WEEK
-    promoCodeCountCache.set(PROMO_CODES_KEY, sortedPromoCodes);
-    await kv.set(PROMO_CODES_KEY, sortedPromoCodes);
-
-    return sortedPromoCodes;
+async function updateCache(timeFrame, promoCounts) {
+    console.log("Updating... [" + timeFrame + "] " + "updateCache.promoCounts: " + promoCounts);
+    await kv.set(PROMO_CODES_KEY[timeFrame], promoCounts);
 }
 
 async function fetchPromoCodeCountsFromCache() {
-    return await kv.get(PROMO_CODES_KEY) || null;
-}
-
-function removePromoCode(promoCodes, promoCodeToRemove) {
-    console.log("removePromoCode.promoCodes: " + promoCodes);
-
-    if (promoCodes.has(promoCodeToRemove)) {
-        promoCodes.delete(promoCodeToRemove);
-    }
+    return await kv.get(PROMO_CODES_KEY.ALL) || null;
 }
 
 function combinePromoCodes(promoCodes) {
     const combinedPromoCodes = new Map();
-
-    for (let [code, count] of promoCodes.entries()) {
+    promoCodes.forEach(([code, count]) => {
         if (code.toString().endsWith('25')) {
             const baseCode = code.slice(0, -2);
-            if (promoCodes.has(baseCode)) {
-                const baseCount = promoCodes.get(baseCode);
-                combinedPromoCodes.set(baseCode, baseCount + count);
+            if (combinedPromoCodes.has(baseCode)) {
+                combinedPromoCodes.set(baseCode, combinedPromoCodes.get(baseCode) + count);
             } else {
                 combinedPromoCodes.set(code, count);
             }
         } else {
             combinedPromoCodes.set(code, count);
         }
-    }
-    return combinedPromoCodes;
+    });
+    return [...combinedPromoCodes.entries()]; // Return as 2D array format [PROMOCODE, COUNT]
 }
 
 module.exports = {
