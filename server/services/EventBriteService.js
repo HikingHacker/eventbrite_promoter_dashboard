@@ -45,8 +45,20 @@ async function fetchOrganizationEvents() {
             Authorization: `Bearer ${config.oauth_token}`
         }
     });
+
     return response.data.events;
 }
+
+const fetchActiveEventsForOrganization = async (organizationId, accessToken) => {
+    const response = await fetch(`https://www.eventbriteapi.com/v3/organizations/${organizationId}/events/?status=live`, {
+        headers: {
+            'Authorization': `Bearer ${accessToken}`
+        }
+    });
+
+    const data = await response.json();
+    return data.events;
+};
 
 async function fetchPromoCodes(eventId) {
     const url = `${config.eventBriteBaseUrl}events/${eventId}/attendees/`;
@@ -97,18 +109,21 @@ async function fetchAndCountPromoCodes() {
         await updateCache(timeFrame, promoCounts);
     }
 
-    return promoCodeCounts.ALL;
+    return promoCodeCounts.WEEK;
 }
 
 async function countPromoCodes(events) {
     const overallPromoCounts = [];
+    let num = 0;
+
     for (let event of events) {
-        console.log("event.id: " + event.id);
+        console.log(num + " event.id: " + event.id);
         const promoCounts = await fetchPromoCodes(event.id);
         overallPromoCounts.push({
             eventDate: event.start.utc,
             promoCounts
         });
+        num++;
     }
     return overallPromoCounts; // Return array of {eventDate, promoCounts}
 }
@@ -131,6 +146,11 @@ async function updateCache(timeFrame, promoCounts) {
     console.log("Updating... [" + timeFrame + "] " + "updateCache.promoCounts: " + promoCounts);
     await kv.set(PROMO_CODES_KEY[timeFrame], promoCounts);
 }
+
+async function fetchPromoCodeCountsFromCache(promoCodesKey) {
+    return await kv.get(promoCodesKey) || null;
+}
+
 
 async function fetchPromoCodeCountsFromCache() {
     return await kv.get(PROMO_CODES_KEY.ALL) || null;

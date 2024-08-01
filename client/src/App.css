@@ -148,7 +148,7 @@ button img {
 }
 
 .row-special {
-    background: linear-gradient(to bottom right, #8a20fb, #1391fa), linear-gradient(white, white);
+    background: linear-gradient(to bottom right, #0326a4, #1391fa), linear-gradient(white, white);
     background-blend-mode: lighten;
 }
 
@@ -156,7 +156,7 @@ button img {
     width: 75px;
     font-size: 24px;
     color: #333;
-    font-family: "Slackey", sans-serif;
+    font-family: sans-serif;
     font-weight: 400;
     font-style: normal;
     padding: 10px;
@@ -185,7 +185,7 @@ button img {
 }
 
 .gradient-border-wrapper {
-    background: linear-gradient(to bottom right, #8a20fb, #1391fa);
+    background: linear-gradient(to bottom right, #0326a4, #1391fa);
     padding: 2px;
     border-radius: 10px;
 }
@@ -220,7 +220,7 @@ button img {
     z-index: -1;
     margin: calc(-1 * var(--border));
     border-radius: inherit;
-    background: linear-gradient(to right, #8a20fb, #1391fa);
+    background: linear-gradient(to right, #0326a4, #1391fa);
 }
 
 .gradient-box-vip {
@@ -245,7 +245,7 @@ button img {
     z-index: -1;
     margin: calc(-1 * var(--border));
     border-radius: inherit;
-    background: linear-gradient(to right, #8a20fb, #1391fa);
+    background: linear-gradient(to right, #0326a4, #1391fa);
 }
 
 .gradient-box-promoter {

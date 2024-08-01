@@ -18,8 +18,8 @@ body {
 h1.promoter-leaderboard {
     font-size: 2.5em;
     color: black;
-    font-family: "Slackey", sans-serif;
-    font-weight: 400;
+    font-family: sans-serif;
+    font-weight: bold;
     font-style: normal;
     text-align: center;
     padding-top: 5px;
@@ -36,8 +36,8 @@ h1.promoter-leaderboard.events {
 h1.events-text {
     font-size: 2.5em;
     color: black;
-    font-family: "Slackey", sans-serif;
-    font-weight: 400;
+    font-family: sans-serif;
+    font-weight: bold;
     font-style: normal;
     text-align: center;
     border-top: 5px solid black; /* Add a gold line under the header */

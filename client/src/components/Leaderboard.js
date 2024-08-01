@@ -47,12 +47,12 @@ export function Leaderboard({ players }) {
     return (
         <div>
             <h1 className="promoter-leaderboard">LEADERBOARD</h1>
-            {/*<br></br>*/}
-            {/*<div className="filter-buttons">*/}
-            {/*    <button id="all" className="filter-button" onClick={handleButtonClick}>ALL</button>*/}
-            {/*    <button id="month" className="filter-button active" onClick={handleButtonClick}>MONTH</button>*/}
-            {/*    <button id="week" className="filter-button" onClick={handleButtonClick}>WEEK</button>*/}
-            {/*</div>*/}
+            <br></br>
+            <div className="filter-buttons">
+                <button id="all" className="filter-button" onClick={handleButtonClick}>ALL</button>
+                <button id="month" className="filter-button active" onClick={handleButtonClick}>MONTH</button>
+                <button id="week" className="filter-button" onClick={handleButtonClick}>WEEK</button>
+            </div>
 
             <div className="table">
                 {currentEntriesWithEmptyRows.map((player, index) => {

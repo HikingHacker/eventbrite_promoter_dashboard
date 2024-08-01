@@ -3,26 +3,15 @@ import { filterEventName, formatDayAndMonth, formatTimeRange } from "../utils/ut
 
 export function EventsTable({ events }) {
     const [promoCode, setPromoCode] = useState("");
-    const [isClicked, setIsClicked] = useState(false); // Add this line
+    const [isClicked, setIsClicked] = useState(false);
 
     const applyPromoCode = (url) => {
         return `${url}?discount=${encodeURIComponent(promoCode)}`;
     };
 
-    const handleButtonClick = async (event) => {
-        event.preventDefault(); // Add this line
-        setIsClicked(true);
-        try {
-            const response = await fetchUpdatedEventsData(); // Fetch updated events data
-            setEvents(response.data); // Update events state
-        } catch (error) {
-            console.error('Error fetching updated events data:', error);
-        }
-    };
-
     const handleInputChange = (e) => {
         setPromoCode(e.target.value);
-        setIsClicked(false); // Add this line
+        setIsClicked(true); // Update to true when text changes
     };
 
     return (
@@ -33,11 +22,11 @@ export function EventsTable({ events }) {
                     type="text"
                     id="promo-code"
                     value={promoCode}
-                    onChange={handleInputChange} // Update this line
+                    onChange={handleInputChange}
                     style={styles.input}
                 />
-                <button onClick={handleButtonClick} style={styles.button}>
-                    {isClicked ? '✅' : '☑️'} {/* Update this line */}
+                <button style={styles.button}>
+                    {isClicked ? '✅' : '☑️'}
                 </button>
             </div>
 
@@ -63,6 +52,7 @@ export function EventsTable({ events }) {
         </div>
     );
 }
+
 
 const styles = {
     promoContainer: {
