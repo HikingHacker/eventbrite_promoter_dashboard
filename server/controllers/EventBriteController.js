@@ -6,7 +6,7 @@
  * is kept separate from the HTTP interface, which improves the testability and reusability
  * of the code.
  */
-const { handleError, formatResponse, getEventId } = require('./controllerHelpers');
+const { handleError, formatResponse, getEventId, getTimeFrame} = require('./controllerHelpers');
 const eventBriteService = require('../services/EventBriteService.js');
 
 // Fetches all events for the organization from the EventBrite API.
@@ -43,7 +43,8 @@ exports.fetchAndCountPromoCodes = async (req, res) => {
 // Fetches the cached promo code counts.
 exports.fetchPromoCodeCountsFromCache = async (req, res) => {
     try {
-        const promoCodeCounts = await eventBriteService.fetchPromoCodeCountsFromCache();
+        const timeFrame = getTimeFrame(req);
+        const promoCodeCounts = await eventBriteService.fetchPromoCodeCountsFromCache(timeFrame);
         if (promoCodeCounts !== null) {
             formatResponse(res, promoCodeCounts);
         } else {

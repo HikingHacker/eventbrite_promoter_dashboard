@@ -53,3 +53,52 @@ export function formatTimeRange(start, end) {
         throw error;
     }
 }
+
+// replaces PROMOCODE with ACTUAL NAMES
+export function replacePromoCodesWithNames(promoCodesList) {
+    const codeToName = {
+        "SILLYGUY": "ALLEN PUTICH",
+        "KYLEG": "KYLE GRANT",
+        "KWATTS": "ERVIN RODRIGUEZ",
+        "MELFINV": "MELFINA VIENGSOMBAT",
+        "VK": "KESHUN BABER",
+        "KLOW": "KEVIN LOPEZ",
+        "TORI": "VICTORIA VALENZUELA",
+        "VIBRANTVIBEZ": "VICTORIA VALENZUELA",
+        "TRACE": "TRACEY KHUC",
+        "KOOKMONSTA": "KAI YOON",
+        "CTC": "NOND HASBAMRER",
+        "CANCELTHECOUCH": "NOND HASBAMRER",
+        "RELEXD": "DINO BRCANINOVIC",
+        "ARIEL": "ARIEL ESPINOSA",
+        "NWPLUR": "MADELINE NELSON",
+        "GRIME": "CAMERON GIMGESTAD",
+        "MECHA": "DAVID ALVARADO",
+        "SANGABSS": "SANDRA CHROSTOWSKA",
+        "SKA": "SANDRA CHROSTOWSKA",
+    };
+
+    return promoCodesList.map(([promoCode, count]) => {
+        const uppercasedPromoCode = promoCode.toUpperCase();
+        const name = codeToName.hasOwnProperty(uppercasedPromoCode) ? codeToName[uppercasedPromoCode] : promoCode;
+        return [name, count];
+    });
+}
+
+export function combinePromoCodes(promoCodes) {
+    let combinedCodes = {};
+
+    // Iterate through each entry in the promoCodes list
+    for (let [code, value] of promoCodes) {
+        // If the code already exists in combinedCodes, add the value
+        if (combinedCodes[code]) {
+            combinedCodes[code] += value;
+        } else {
+            // Otherwise, create a new entry with the code and value
+            combinedCodes[code] = value;
+        }
+    }
+
+    // Convert the combinedCodes object back into an array format
+    return Object.entries(combinedCodes);
+}

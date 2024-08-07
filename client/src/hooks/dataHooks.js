@@ -31,11 +31,11 @@ export function useEventData() {
 
 export function usePromoCodes() {
     const [promoCodes, setPromoCodes] = useState([]);
-    // load promocodes from cache
+    // fetch promo codes from cache
     useEffect(() => {
         const fetchCachedPromoCodes = async () => {
             try {
-                const response = await axios.get(`${API_URL}/api/events/aggregateCached`);
+                const response = await axios.get(`${API_URL}/api/events/aggregateCached/all`);
                 setPromoCodes(response.data);
             } catch (err) {
                 console.error('Error fetching promo codes:', err);
@@ -45,20 +45,33 @@ export function usePromoCodes() {
         fetchCachedPromoCodes();
     }, []);
 
-
-    // fetch promocodes from API
-    useEffect(() => {
-        const fetchPromoCodes = async () => {
-            try {
-                await axios.get(`${API_URL}/api/events/aggregate`);
-                // setPromoCodes(response.data);
-            } catch (err) {
-                console.error('Error fetching promo codes:', err);
-            }
-        };
-
-        fetchPromoCodes();
-    }, []);
+    // TODO: DISABLE for local testing. Prevents RATE limiting
+    // fetch promo codes from API
+    // useEffect(() => {
+    //     const fetchPromoCodes = async () => {
+    //         try {
+    //             const response = await axios.get(`${API_URL}/api/events/aggregate`);
+    //             setPromoCodes(response.data);
+    //         } catch (err) {
+    //             console.error('Error fetching promo codes:', err);
+    //         }
+    //     };
+    //
+    //     fetchPromoCodes();
+    // }, []);
 
     return { promoCodes };
+}
+
+export function fetchCachedPromoCodes() {
+    const fetchCachedPromoCodes = async () => {
+        try {
+            const response = await axios.get(`${API_URL}/api/events/aggregateCached/all`);
+            // setPromoCodes(response.data);
+        } catch (err) {
+            console.error('Error fetching promo codes:', err);
+        }
+    };
+
+    fetchCachedPromoCodes();
 }

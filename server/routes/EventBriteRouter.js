@@ -30,7 +30,7 @@ router.get('/organizations/:orgId/events/all', eventsController.fetchPaginatedOr
 router.get('/getEvents', eventsController.fetchOrganizationEvents);
 router.get('/:eventId/promocodes', eventsController.fetchPromoCodesForEvent);
 router.get('/aggregate', eventsController.fetchAndCountPromoCodes);
-router.get('/aggregateCached', eventsController.fetchPromoCodeCountsFromCache);
+router.get('/aggregateCached/:timeframe', eventsController.fetchPromoCodeCountsFromCache);
 router.get('/paginated', eventsController.fetchPaginatedEvents);
 
 // Error handling middleware

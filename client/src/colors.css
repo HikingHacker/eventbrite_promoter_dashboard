@@ -1,0 +1,32 @@
+/* colors.css */
+:root {
+    --color-primary: #00ccff;
+    --color-secondary: #0080ff;
+    --color-text: #ffffff;
+    --color-background: #000000;
+    --color-white: #ffffff;
+    --color-black: #000000;
+    --color-error: #ff0000;
+    --color-border: #ccc;
+    --color-gradient-start: var(--color-primary);
+    --color-gradient-end: var(--color-secondary); /*#a997f6;*/
+    --color-gray: #a3a3b7;
+    --color-light-gray: #f3f3f3;
+
+    /* Header colors */
+    --color-header-text: #ffffff;
+    --color-header-border: #ffffff;
+
+    /* Button colors */
+    --color-buttons-background: #fdfdfd;
+
+    --color-buttons-unselected: var(--color-buttons-background);
+    --color-text-unselected: #000000;
+
+    --color-buttons-hover: darkgray;
+    --color-text-hover: #7c7b7b;
+
+    --color-buttons-active: #000000;
+    --color-text-active: #ffffff;
+
+}

@@ -7,6 +7,9 @@ const config = {
 
 const { kv } = require('@vercel/kv');
 
+// TODO: refactor API calls to to maintain past and fetch future events and form counts to prevent rate limiting
+// TODO: add single initial fetch for all events on boot-up
+
 async function fetchPaginatedEvents(url, params, key) {
     let page = 1;
     let allData = [];
@@ -104,12 +107,15 @@ async function fetchAndCountPromoCodes() {
         WEEK: filterPromoCounts(allPromoCounts, timeFrames.WEEK)
     };
 
+    // adds all ticket sales from legacy levels platform
+    promoCodeCounts.ALL = addLegacyPromoCodes(promoCodeCounts.ALL);
+
     console.log("Updating Redis cache");
     for (const [timeFrame, promoCounts] of Object.entries(promoCodeCounts)) {
         await updateCache(timeFrame, promoCounts);
     }
 
-    return promoCodeCounts.WEEK;
+    return promoCodeCounts.MONTH;
 }
 
 async function countPromoCodes(events) {
@@ -128,12 +134,50 @@ async function countPromoCodes(events) {
     return overallPromoCounts; // Return array of {eventDate, promoCounts}
 }
 
+function isHiddenPromoCode(code) {
+    let hidden = ['FREE_TICKET_DEV_TEST', 'WAVE', 'BASSEXHIBIT', 'BEEBO'];
+    const uppercasedCode = code.toUpperCase();
+    return hidden.includes(uppercasedCode);
+}
+
+function addLegacyPromoCodes(promoCodesList) {
+    const legacyCountMap = {
+        "NWPLUR": 118,
+        "VIBRANTVIBEZ": 66,
+        "CANCELTHECOUCH": 31,
+        "ALYSSA": 29,
+        "KEVIN": 28,
+        "NAKATANI": 20,
+        "RINN": 20,
+        "KEITHM": 18,
+        "GENSUO": 17,
+        "LUCKYLIGHT": 15,
+        "CHAO": 13,
+        "KWATTS": 11,
+        "BEARBASS": 11,
+    }
+
+    // add legacy counts
+    let updatedPromoCodesList = promoCodesList.map(([promoCode, count]) => {
+        const uppercasePromoCode = promoCode.toUpperCase();
+        const newCount = legacyCountMap.hasOwnProperty(uppercasePromoCode) ? count + legacyCountMap[uppercasePromoCode] : count;
+        return [promoCode, newCount];
+    });
+
+    // update sort & return
+    return sortPromoCodesByValue(updatedPromoCodesList);
+}
+
+function sortPromoCodesByValue(promoCodesList) {
+    return promoCodesList.sort((a, b) => b[1] - a[1]);
+}
+
 function filterPromoCounts(allPromoCounts, filterFn) {
     const filteredPromoCounts = new Map();
     for (const { eventDate, promoCounts } of allPromoCounts) {
         if (filterFn({ start: { utc: eventDate } })) { // Adjust the filtering logic based on the event's start time
             promoCounts.forEach(([code, count]) => {
-                if (code !== 'FREE_TICKET_DEV_TEST') {
+                if (!isHiddenPromoCode(code)) {
                     filteredPromoCounts.set(code, (filteredPromoCounts.get(code) || 0) + count);
                 }
             });
@@ -147,13 +191,19 @@ async function updateCache(timeFrame, promoCounts) {
     await kv.set(PROMO_CODES_KEY[timeFrame], promoCounts);
 }
 
-async function fetchPromoCodeCountsFromCache(promoCodesKey) {
-    return await kv.get(promoCodesKey) || null;
-}
+async function fetchPromoCodeCountsFromCache(timeframe) {
+    console.log("fetchPromoCodeCountsFromCache: " + timeframe);
 
-
-async function fetchPromoCodeCountsFromCache() {
-    return await kv.get(PROMO_CODES_KEY.ALL) || null;
+    switch(timeframe) {
+        case 'all':
+            return await kv.get(PROMO_CODES_KEY.ALL) || null;
+        case 'month':
+            return await kv.get(PROMO_CODES_KEY.MONTH) || null;
+        case 'week':
+            return await kv.get(PROMO_CODES_KEY.WEEK) || null;
+        default:
+            return null;
+    }
 }
 
 function combinePromoCodes(promoCodes) {

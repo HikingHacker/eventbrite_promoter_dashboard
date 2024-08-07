@@ -1,0 +1,50 @@
+/* EventsTable.css */
+
+.events-text {
+    /* Add any specific styles for the h1 if needed */
+}
+
+.promo-container {
+    display: flex;
+    align-items: center;
+    background-color: var(--color-buttons-active);
+    border-radius: 10px;
+    margin-top: 15px;
+    color: var(--color-buttons-unselected);
+    height: 20px;
+}
+
+.promo-label {
+    margin-right: 10px;
+    padding: 10px;
+    width: 30%;
+    font-weight: bold;
+    text-align: right;
+    white-space: nowrap;
+}
+
+.promo-input {
+    border: none;
+    padding: 7px;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 55%;
+}
+
+.promo-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    float: left;
+    text-align: left;
+    font-size: 32px;
+    width: 15%;
+}
+
+.events-table {
+    margin-top: 20px;
+}
+
+.time-range {
+    margin-top: 5px;
+}

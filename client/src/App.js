@@ -4,6 +4,8 @@ import { useEventData, usePromoCodes } from './hooks/dataHooks';
 import ErrorBoundary from './components/ErrorBoundary';
 import Leaderboard from './components/Leaderboard';
 import EventsTable from './components/EventsTable';
+import About from './components/About';
+import logo from './images/Wave-Garden-Wave-Icon-(Blue).png'; // Import the image
 
 function App() {
     const { upcomingEvents, error } = useEventData();
@@ -15,13 +17,10 @@ function App() {
 
     return (
         <div className="app-content">
-            <div>
-                <Leaderboard players={promoCodes} />
-            </div>
-            <div className="upcoming-events">
-                <h1 className="events-text">EVENTS</h1>
-                <EventsTable events={upcomingEvents} />
-            </div>
+            <img src={logo} alt="Description" className="logo" />
+            <Leaderboard players={promoCodes} />
+            <EventsTable events={upcomingEvents} />
+            <About />
         </div>
     );
 }

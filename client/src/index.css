@@ -1,5 +1,5 @@
 /* Reset some basic elements */
-body, h1, p, table {
+body, h1, h2, p, table, th, td {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -7,46 +7,36 @@ body, h1, p, table {
 
 /* Set basic styles for the entire body */
 body {
-    font-family: 'Arial', sans-serif; /* Use a common sans-serif font */
+    font-family: 'Arial', sans-serif;
     line-height: 1;
     margin: 20px;
-    background-color: #f4f4f4; /* A light grey background */
-    color: #333; /* Dark grey text color for readability */
+    background-color: var(--color-white);
 }
 
 /* Header styles */
-h1.promoter-leaderboard {
-    font-size: 2.5em;
-    color: black;
-    font-family: sans-serif;
-    font-weight: bold;
+h1, h2 {
+    font-family: 'Outfit', sans-serif;
+    font-weight: bolder;
     font-style: normal;
     text-align: center;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    border-top: 5px solid black; /* Add a gold line under the header */
-    border-bottom: 5px solid black; /* Add a gold line under the header */
-}
-
-h1.promoter-leaderboard.events {
-    color: black; /* Overwrite the color property */
-}
-
-/* Header styles */
-h1.events-text {
-    font-size: 2.5em;
-    color: black;
-    font-family: sans-serif;
-    font-weight: bold;
-    font-style: normal;
-    text-align: center;
-    border-top: 5px solid black; /* Add a gold line under the header */
-    border-bottom: 5px solid black; /* Add a gold line under the header */
+    margin-bottom: 10px;
+    border-top: 5px solid var(--color-header-border);
+    border-bottom: 5px solid var(--color-header-border);
+    padding: 5px 0;
 }
 
 h1 {
-    font-size: 2em;
-    color: #444;
+    font-size: 2.5em;
+    color: var(--color-header-text);
+}
+
+h1.about, h1.promoter-leaderboard {
+    margin-top: 10px;
+}
+
+h1.events-text {
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
 }
 
 h2 {
@@ -58,53 +48,40 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--color-light-gray);
+    background: var(--color-background);
 }
 
 th, td {
     padding: 20px;
     text-align: left;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid var(--color-light-gray);
 }
 
 th {
-    background-color: #000000; /* Green background */
-    color: white; /* White text */
+    background-color: #000;
+    color: var(--color-white);
     padding: 15px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
 }
 
-td.count {
-    text-align: right;
-}
-
-th.count-header {
+td.count, th.count-header {
     text-align: right;
 }
 
 tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
-tr:hover {
-    background-color: #ddd;
+    background-color: var(--color-light-gray);
 }
 
 /* Button and link styles */
 button, a {
     font-size: 16px;
-    color: white;
-    background-color: #0056b3; /* A nice shade of blue */
+    color: var(--color-white);
+    background-color: var(--color-secondary);
     padding: 10px 15px;
     border: none;
     border-radius: 10px;
     text-decoration: none;
     display: inline-block;
-}
-
-button:hover, a:hover {
-    background-color: #004494; /* A slightly darker blue on hover */
 }
 
 /* Add some padding around the main application area */
@@ -119,4 +96,4 @@ Headers: Styles for h1 elements to distinguish them as primary headers.
 Tables: Basic styling for tables with borders, padding, and alternating row colors for better readability.
 Buttons and Links: A consistent style for buttons and links to make them more attractive and usable.
 Utility Classes: For example, .main-container to add padding around main content areas, which you can apply to your top-level div in App.js.
- */
+*/
