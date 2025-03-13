@@ -14,8 +14,14 @@ function getEventId(req) {
     return req.params.eventId;
 }
 
+// Parameter extraction functions
+function getTimeFrame(req) {
+    return req.params.timeframe;
+}
+
 module.exports = {
     handleError,
     formatResponse,
-    getEventId
+    getEventId,
+    getTimeFrame
 };

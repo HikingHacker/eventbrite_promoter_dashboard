@@ -1,0 +1,83 @@
+/* Leaderboard.css */
+
+.promoter-leaderboard {
+    /* Add any specific styles for the h1 if needed */
+}
+
+.filter-buttons {
+    display: flex;
+    /* Add any other styles for the filter buttons container */
+}
+
+.filter-button {
+    /* Add styles for the filter buttons */
+}
+
+.filter-button.active {
+    /* Add styles for the active filter button */
+}
+
+.table {
+    /* Add any styles for the table container */
+}
+
+.row {
+    display: flex;
+    align-items: stretch;
+    margin: 10px 0;
+}
+
+.position {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-score {
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.username {
+    /* Add any styles for the username */
+}
+
+.score {
+    /* Add any styles for the score */
+}
+
+.gradient-box-mvp {
+    /* Add styles for MVP gradient box */
+}
+
+.gradient-box-vip {
+    /* Add styles for VIP gradient box */
+}
+
+.gradient-box-promoter {
+    /* Add styles for Promoter gradient box */
+}
+
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    gap: 10px;
+}
+
+.pagination-button {
+    width: 50%;
+    padding: 15px;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+    color: var(--color-text-unselected);
+}
+
+.pagination-button:disabled {
+    background-color: var(--color-buttons-hover);
+}
+
+.pagination-button:enabled {
+    background-color: var(--color-buttons-unselected);
+}
