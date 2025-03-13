@@ -97,3 +97,7 @@ yarn-error.log*
 ##########
 /z-local-temp/
 .vercel
+
+# Claude assistant files #
+#########################
+CLAUDE.md
